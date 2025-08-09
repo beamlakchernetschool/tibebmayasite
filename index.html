@@ -2,34 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Tibebmaya — Tutoring & Learning</title>
+  <meta name="description" content="Tibebmaya — polished, modern tutoring for KG–12. Contact our team, view plans, and download the Tibebmaya Flashcard app." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <meta name="description" content="Tibebmaya — polished, modern tutoring for KG–12. Contact our team, view plans, and download the Tibebmaya Flashcard app." />
   <style>
     :root{
-      /* light mode palette */
       --bg: #f6f8fb;
-      --surface: #ffffff;
-      --muted: #667085;
-      --text: #0b1220;
-      --accent-1: #6ee7b7;
-      --accent-2: #60a5fa;
+      --surface:#ffffff;
+      --muted:#667085;
+      --text:#071022;
+      --accent-1:#34d399;
+      --accent-2:#60a5fa;
       --glass: rgba(11,18,32,0.04);
-      --radius: 16px;
-      --card-radius: 20px;
-      --transition: 260ms cubic-bezier(.2,.9,.3,1);
+      --radius:14px;
+      --card-radius:18px;
+      --transition:260ms cubic-bezier(.2,.9,.3,1);
       color-scheme: light;
+      font-size:16px;
     }
     html.dark{
-      --bg: #071022;
-      --surface: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      --muted: #9fb0c8;
-      --text: #e8f0f9;
-      --accent-1: #34d399;
-      --accent-2: #60a5fa;
+      --bg:#071022;
+      --surface:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      --muted:#9fb0c8;
+      --text:#e8f0f9;
+      --accent-1:#34d399;
+      --accent-2:#60a5fa;
       --glass: rgba(255,255,255,0.03);
       color-scheme: dark;
     }
@@ -37,123 +37,128 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-      line-height:1.45;transition:background var(--transition), color var(--transition);
+      margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.45;transition:background var(--transition),color var(--transition);font-size:16px;
     }
 
-    /* container */
-    .container{max-width:1180px;margin:0 auto;padding:22px}
+    /* page container */
+    .wrap{max-width:1100px;margin:0 auto;padding:18px;}
 
-    header{
-      position:sticky;top:12px;z-index:80;margin:0 auto;padding:8px;background:transparent;display:flex;align-items:center;justify-content:space-between;gap:12px
-    }
-    .navbar{backdrop-filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,0.0),rgba(255,255,255,0.02));padding:10px 14px;border-radius:14px;display:flex;align-items:center;gap:18px;box-shadow:0 6px 24px rgba(8,12,20,0.06)}
-    html.dark .navbar{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
+    /* header */
+    header{position:sticky;top:10px;z-index:80;margin-bottom:8px}
+    .navbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;background:transparent}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{height:44px;width:44px;object-fit:contain;border-radius:10px}
+    .brand .title{font-weight:800}
+    .muted-small{color:var(--muted);font-size:13px}
 
-    .logo{display:flex;align-items:center;gap:12px}
-    .logo img{height:44px;width:44px;object-fit:contain;border-radius:10px;transition:transform var(--transition)}
-    .brand{font-weight:700;letter-spacing:0.2px}
-    .muted{color:var(--muted)}
+    /* nav */
+    .nav-links{display:flex;gap:12px;align-items:center}
+    .nav-links a{padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600;transition:all var(--transition)}
+    .nav-links a:hover{background:var(--glass);transform:translateY(-3px)}
 
-    nav{display:flex;gap:14px;align-items:center}
-    nav a{color:var(--text);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600;transition:all var(--transition)}
-    nav a:hover{background:var(--glass);transform:translateY(-4px)}
-
-    /* theme toggle */
+    /* controls */
     .controls{display:flex;align-items:center;gap:10px}
-    .theme-toggle{width:46px;height:36px;border-radius:12px;border:none;background:transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:6px;transition:transform var(--transition)}
-    .theme-toggle:focus{outline:2px solid rgba(96,165,250,0.25);outline-offset:3px}
-    .apk-link{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#071022;font-weight:700;text-decoration:none;box-shadow:0 10px 30px rgba(16,24,40,0.08);transition:transform var(--transition)}
-    .apk-link:hover{transform:translateY(-6px)}
+    .apk-link{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#071022;font-weight:700;text-decoration:none}
+    .toggle-btn{width:44px;height:36px;border-radius:10px;border:none;background:var(--surface);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+
+    /* mobile menu */
+    .hamburger{display:none;border:none;background:transparent;padding:8px;border-radius:8px}
 
     /* hero */
-    .hero{display:grid;grid-template-columns:1fr 520px;gap:36px;align-items:center;padding:44px 0}
-    @media (max-width:980px){.hero{grid-template-columns:1fr;gap:18px}}
-
-    .hero-card{background:var(--surface);padding:36px;border-radius:var(--card-radius);box-shadow:0 18px 50px rgba(7,16,30,0.06);transition:transform var(--transition);}
-    .hero-card:hover{transform:translateY(-6px)}
-    .hero h1{margin:0;font-size:clamp(28px,4.8vw,44px);line-height:1.05}
-    .tag{color:var(--muted);margin-top:10px}
-    .lead{margin-top:18px;color:var(--muted);font-size:15px}
-
+    .hero{display:grid;grid-template-columns:1fr 480px;gap:28px;align-items:center;padding:10px 0}
+    .hero-card{background:var(--surface);padding:28px;border-radius:var(--card-radius);box-shadow:0 26px 60px rgba(7,16,30,0.06);transition:transform var(--transition)}
+    .hero-card h1{margin:0;font-size:clamp(22px,4.6vw,36px);line-height:1.05}
+    .hero-card p{color:var(--muted);margin-top:12px}
     .hero-actions{display:flex;gap:12px;margin-top:18px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent-1), var(--accent-2));color:#071022;font-weight:700;border:none;cursor:pointer;box-shadow:0 12px 30px rgba(16,24,40,0.06)}
-    .btn-secondary{padding:10px 14px;border-radius:12px;border:1px solid rgba(11,18,32,0.06);background:transparent}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent-1), var(--accent-2));color:#071022;font-weight:700;border:none;cursor:pointer}
+    .btn-ghost{padding:10px 14px;border-radius:12px;border:1px solid rgba(11,18,32,0.06);background:transparent}
 
-    /* improved hero visual using background-image so a 2048x1117 fits elegantly */
-    .hero-visual{position:relative;height:420px;border-radius:22px;overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-start}
+    /* hero visual uses background-image so 2048x1117 fits beautifully */
+    .hero-visual{position:relative;height:420px;border-radius:22px;overflow:hidden;display:flex;align-items:flex-end}
     .hero-visual::before{content:"";position:absolute;inset:0;background-image:url('students-group.jpg');background-size:cover;background-position:center right;background-repeat:no-repeat;transform:scale(1.03);transition:transform 10s linear}
-    .hero-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,10,20,0.0) 0%, rgba(6,10,20,0.38) 60%);mix-blend-mode:normal}
-    .visual-overlay{position:relative;z-index:3;padding:28px;color:white;align-items:flex-end;display:flex;flex-direction:column;gap:10px;height:100%}
-    .visual-overlay .title{font-weight:800;font-size:18px}
-    .visual-overlay .sub{color:rgba(255,255,255,0.85)}
+    .hero-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,10,20,0.0) 0%, rgba(6,10,20,0.46) 60%)}
+    .visual-content{position:relative;z-index:3;padding:24px;color:white;display:flex;flex-direction:column;gap:8px;width:100%}
 
-    /* plans */
+    /* sections */
+    main{padding:22px 0}
     .section-title{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:16px}
-    @media (max-width:720px){.grid{grid-template-columns:1fr}}
-    .plan{padding:22px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));box-shadow:0 14px 40px rgba(9,18,30,0.06);transition:transform var(--transition)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:14px}
+    .plan{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));box-shadow:0 14px 40px rgba(9,18,30,0.06);transition:transform var(--transition)}
     html.dark .plan{background:var(--surface)}
-    .plan:hover{transform:translateY(-10px)}
-    .price{font-weight:800;margin-top:12px}
-    .choose{margin-top:16px}
+    .price{font-weight:800;margin-top:10px}
+    .choose{margin-top:14px}
 
-    /* contact cards */
-    .contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
-    @media (max-width:920px){.contacts{grid-template-columns:1fr}}
-    .contact-card{display:flex;gap:14px;align-items:center;padding:16px;border-radius:12px;background:linear-gradient(180deg,white,#fbfdff);box-shadow:0 8px 30px rgba(8,12,20,0.04);transition:transform var(--transition)}
-    html.dark .contact-card{background:var(--surface)}
-    .avatar{width:78px;height:78px;border-radius:12px;object-fit:cover;flex-shrink:0}
+    .contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+    .contact-card{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(180deg,white,#fbfdff);box-shadow:0 8px 30px rgba(8,12,20,0.04);transition:transform var(--transition)}
+    .avatar{width:72px;height:72px;border-radius:12px;object-fit:cover}
 
-    footer{padding:40px 0;border-top:1px solid rgba(11,18,32,0.04);margin-top:36px;display:flex;justify-content:space-between;align-items:center}
+    footer{padding:28px 0;border-top:1px solid rgba(11,18,32,0.04);margin-top:24px;display:flex;justify-content:space-between;align-items:center}
 
     /* modal */
-    .overlay{position:fixed;inset:0;background:rgba(3,8,18,0.5);display:none;align-items:center;justify-content:center;padding:20px;z-index:60}
+    .overlay{position:fixed;inset:0;background:rgba(3,8,18,0.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
     .overlay.show{display:flex}
-    .modal{width:100%;max-width:720px;background:var(--surface);border-radius:14px;padding:20px;box-shadow:0 40px 90px rgba(2,8,20,0.6)}
+    .modal{width:100%;max-width:760px;background:var(--surface);border-radius:14px;padding:18px;box-shadow:0 40px 90px rgba(2,8,20,0.6)}
     .field{display:flex;flex-direction:column;margin-bottom:12px}
     input,select,textarea{padding:12px;border-radius:10px;border:1px solid rgba(11,18,32,0.06);outline:none}
-    input:focus,select:focus,textarea:focus{box-shadow:0 10px 30px rgba(16,24,40,0.06);transform:translateY(-2px)}
 
-    /* small niceties */
-    .muted-small{color:var(--muted);font-size:13px}
-    .kbd{padding:6px 8px;border-radius:8px;background:var(--glass);font-weight:700}
+    /* responsive adjustments for phone */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;gap:18px}
+      .hero-visual{height:300px}
+      .hero-visual::before{background-position:center}
+      .grid{grid-template-columns:1fr}
+      .contacts{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .hamburger{display:inline-flex}
+      .brand .title{font-size:16px}
+      .wrap{padding:14px}
+    }
 
-    /* subtle background movement on load */
-    @media (prefers-reduced-motion: no-preference){
-      .hero-visual::before{animation:pan 16s linear infinite alternate}
-      @keyframes pan{from{transform:scale(1.03) translateX(0)}to{transform:scale(1.06) translateX(-40px)}}
+    @media (max-width:520px){
+      :root{font-size:15px}
+      .hero-visual{height:260px}
+      .brand img{height:40px;width:40px}
+      .hero-card{padding:20px}
+      .btn{width:100%;justify-content:center}
+      .hero-actions{flex-direction:column}
+      .apk-link{display:none}
+      .toggle-btn{width:40px;height:36px}
+      .muted-small{font-size:12px}
+      .modal{padding:14px;border-radius:12px}
     }
 
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="wrap">
     <header>
-      <div class="navbar" style="width:100%">
-        <div style="display:flex;align-items:center;gap:12px;flex:1">
-          <div class="logo">
+      <div class="navbar">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="brand">
             <img src="tibebmayalogo.png" alt="Tibebmaya logo">
             <div>
-              <div class="brand">Tibebmaya</div>
+              <div class="title">Tibebmaya</div>
               <div class="muted-small">Personalized tutoring • KG–12</div>
             </div>
           </div>
-          <nav style="margin-left:18px">
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px">
+          <nav class="nav-links" aria-label="Main navigation">
             <a href="#about">About</a>
             <a href="#plans">Plans</a>
             <a href="#contact">Contact</a>
           </nav>
-        </div>
 
-        <div class="controls">
-          <a class="apk-link" href="tibebmayaflashcardapp.apk" download>Download App</a>
-          <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
-            <!-- icons will be toggled by JS -->
-            <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none"><path d="M12 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 22v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.22 4.22L2.8 2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21.2 21.2l-1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
-            <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+          <button class="hamburger" id="menuBtn" aria-label="Open menu" title="Menu">☰</button>
+
+          <div class="controls">
+            <a class="apk-link" href="tibebmayaflashcardapp.apk" download>Download App</a>
+            <button id="themeToggle" class="toggle-btn" aria-label="Toggle theme" title="Toggle theme">
+              <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:none"><path d="M12 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 22v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.22 4.22L2.8 2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21.2 21.2l-1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+              <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -161,15 +166,15 @@
     <section class="hero">
       <div class="hero-card">
         <h1>Polished, dependable tutoring for curious learners</h1>
-        <div class="tag">Small classes • Expert tutors • Engaging lesson plans</div>
-        <p class="lead">Tibebmaya blends evidence-based teaching with modern digital tools — like our flashcard app — to help learners build strong foundations and confidence. Flexible online or in-person sessions with clear progress tracking.</p>
+        <div class="muted-small" style="margin-top:8px">Small classes • Expert tutors • Engaging lesson plans</div>
+        <p style="margin-top:12px;color:var(--muted)">Tibebmaya blends evidence-based teaching with modern digital tools — like our flashcard app — to help learners build strong foundations and confidence. Flexible online or in-person sessions with clear progress tracking.</p>
 
         <div class="hero-actions">
-          <a class="btn" href="#plans">View Plans</a>
-          <a class="btn-secondary" href="#contact">Meet the team</a>
+          <button class="btn" onclick="document.querySelector('#plans').scrollIntoView({behavior:'smooth'})">View Plans</button>
+          <button class="btn-ghost" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Meet the team</button>
         </div>
 
-        <dl style="display:flex;gap:18px;margin-top:20px;flex-wrap:wrap">
+        <dl style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap">
           <div><dt class="muted-small">Subjects</dt><dd>Math, Science, English, Reading</dd></div>
           <div><dt class="muted-small">Format</dt><dd>Group & private</dd></div>
           <div><dt class="muted-small">Location</dt><dd>Online & in-person</dd></div>
@@ -177,20 +182,21 @@
       </div>
 
       <div class="hero-visual" aria-hidden="true">
-        <div class="visual-overlay">
-          <div style="background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));padding:10px 14px;border-radius:12px"> 
+        <div class="visual-content">
+          <div style="background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));padding:10px 14px;border-radius:12px;display:inline-block">
             <div style="font-weight:800">Tibebmaya Flashcards</div>
             <div class="muted-small">Spaced repetition and curated decks</div>
           </div>
+
           <div style="margin-top:auto;display:flex;gap:10px">
-            <a class="apk-link" href="tibebmayaflashcardapp.apk" download>Download APK</a>
+            <a class="btn" href="tibebmayaflashcardapp.apk" download>Download APK</a>
           </div>
         </div>
       </div>
     </section>
 
     <main>
-      <section id="about" style="margin-top:20px">
+      <section id="about" style="margin-top:18px">
         <div class="section-title">
           <div>
             <h2 style="margin:0">About Tibebmaya</h2>
@@ -198,17 +204,17 @@
           </div>
         </div>
 
-        <div style="display:flex;gap:22px;margin-top:18px;align-items:stretch;flex-wrap:wrap">
-          <div style="flex:1;min-width:320px">
-            <p class="muted">Tibebmaya was founded to make high-quality tutoring accessible and friendly. Our approach mixes hands-on activities, diagnostic assessments, and targeted practice. Tutors provide clear learning goals and frequent progress reports so families always know the next steps.</p>
+        <div style="display:flex;gap:18px;margin-top:14px;flex-wrap:wrap">
+          <div style="flex:1;min-width:260px">
+            <p class="muted-small">Tibebmaya was founded to make high-quality tutoring accessible and friendly. Our approach mixes hands-on activities, diagnostic assessments, and targeted practice. Tutors provide clear learning goals and frequent progress reports so families always know the next steps.</p>
           </div>
           <div style="max-width:360px">
-            <p class="muted">We value transparency — simple pricing, easy registration, and digital tools that keep learning going between lessons. Replace these sample images in the repo to fully brand the site.</p>
+            <p class="muted-small">We value transparency — simple pricing, easy registration, and digital tools that keep learning going between lessons. Replace these sample images in the repo to fully brand the site.</p>
           </div>
         </div>
       </section>
 
-      <section id="plans" style="margin-top:28px">
+      <section id="plans" style="margin-top:22px">
         <div class="section-title">
           <h2 style="margin:0">Plans</h2>
           <div class="muted-small">Choose the plan that fits your child's grade level. Click "Choose plan" to register.</div>
@@ -217,42 +223,42 @@
         <div class="grid">
           <article class="plan">
             <h3>Kindergarten (KG)</h3>
-            <div class="muted">Play-based foundations: early literacy, number sense, and social skills. Short, engaging sessions with parent notes after each lesson.</div>
+            <div class="muted-small">Play-based foundations: early literacy, number sense, and social skills. Short, engaging sessions with parent notes after each lesson.</div>
             <div class="price">200 birr / hour</div>
             <button class="choose" data-plan="Kindergarten (KG)" onclick="openRegister(event)">Choose plan</button>
           </article>
 
           <article class="plan">
             <h3>Grades 1–4</h3>
-            <div class="muted">Reading fluency, basic arithmetic, and confidence-building. Interactive worksheets and friendly assessments.</div>
+            <div class="muted-small">Reading fluency, basic arithmetic, and confidence-building. Interactive worksheets and friendly assessments.</div>
             <div class="price">200 birr / hour</div>
             <button class="choose" data-plan="Grades 1–4" onclick="openRegister(event)">Choose plan</button>
           </article>
 
           <article class="plan">
             <h3>Grades 5–6</h3>
-            <div class="muted">Deeper math concepts, comprehension, and study habits for middle school readiness.</div>
+            <div class="muted-small">Deeper math concepts, comprehension, and study habits for middle school readiness.</div>
             <div class="price">250 birr / hour</div>
             <button class="choose" data-plan="Grades 5–6" onclick="openRegister(event)">Choose plan</button>
           </article>
 
           <article class="plan">
             <h3>Grades 7–8</h3>
-            <div class="muted">Pre-algebra, science fundamentals, and critical reading to prepare for high school.</div>
+            <div class="muted-small">Pre-algebra, science fundamentals, and critical reading to prepare for high school.</div>
             <div class="price">300 birr / hour</div>
             <button class="choose" data-plan="Grades 7–8" onclick="openRegister(event)">Choose plan</button>
           </article>
 
           <article class="plan">
             <h3>Grades 9–12</h3>
-            <div class="muted">Subject tutoring for high school — algebra, geometry, physics, chemistry, and advanced English. Exam prep and college readiness coaching.</div>
+            <div class="muted-small">Subject tutoring for high school — algebra, geometry, physics, chemistry, and advanced English. Exam prep and college readiness coaching.</div>
             <div class="price">350 birr / hour</div>
             <button class="choose" data-plan="Grades 9–12" onclick="openRegister(event)">Choose plan</button>
           </article>
         </div>
       </section>
 
-      <section id="contact" style="margin-top:32px">
+      <section id="contact" style="margin-top:24px">
         <h2 style="margin:0">Contact & Team</h2>
         <p class="muted-small" style="margin-top:8px">Replace the headshots in the repo to personalize the team cards (gelgelo-headshot.png, beamlak-headshot.png, fikadu-headshot.png).</p>
 
@@ -305,6 +311,7 @@
       <button onclick="closeRegister()" style="float:right;opacity:0.7;border:none;background:transparent;font-size:18px;cursor:pointer">✕</button>
       <h2 id="modalTitle">Register</h2>
       <form id="registerForm" action="https://formsubmit.co/tibebmayateam@gmail.com" method="POST">
+        <!-- recommended hidden fields -->
         <input type="hidden" name="_subject" value="New registration from Tibebmaya website">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" id="selectedPlan" name="Plan" value="">
@@ -313,12 +320,12 @@
           <label class="muted-small">Full name</label>
           <input type="text" name="Full name" required>
         </div>
-        <div class="row" style="display:flex;gap:12px">
-          <div style="flex:1" class="field">
+        <div class="field" style="display:flex;gap:10px">
+          <div style="flex:1">
             <label class="muted-small">Email</label>
             <input type="email" name="Email" required>
           </div>
-          <div style="flex:1" class="field">
+          <div style="flex:1">
             <label class="muted-small">Phone number</label>
             <input type="tel" name="Phone" required>
           </div>
@@ -335,7 +342,7 @@
         </div>
 
         <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
-          <button type="button" class="ghost" onclick="closeRegister()">Cancel</button>
+          <button type="button" class="btn-ghost" onclick="closeRegister()">Cancel</button>
           <button type="submit" class="btn">Submit registration</button>
         </div>
       </form>
@@ -343,68 +350,46 @@
   </div>
 
   <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.querySelector('.nav-links');
+    menuBtn && menuBtn.addEventListener('click', ()=>{
+      const visible = navLinks.style.display === 'flex';
+      navLinks.style.display = visible ? 'none' : 'flex';
+      if(!visible){ navLinks.style.flexDirection = 'column'; navLinks.style.position='absolute'; navLinks.style.right='18px'; navLinks.style.top='70px'; navLinks.style.background='var(--surface)'; navLinks.style.padding='12px'; navLinks.style.borderRadius='12px'; navLinks.style.boxShadow='0 12px 40px rgba(7,16,30,0.08)'; }
+    });
+
     // Theme toggle with persistence
     const themeToggle = document.getElementById('themeToggle');
     const iconSun = document.getElementById('iconSun');
     const iconMoon = document.getElementById('iconMoon');
-
     function setTheme(dark){
-      if(dark){
-        document.documentElement.classList.add('dark');
-        iconSun.style.display = 'inline-block';
-        iconMoon.style.display = 'none';
-      } else {
-        document.documentElement.classList.remove('dark');
-        iconSun.style.display = 'none';
-        iconMoon.style.display = 'inline-block';
-      }
+      if(dark){ document.documentElement.classList.add('dark'); iconSun.style.display='inline-block'; iconMoon.style.display='none'; }
+      else { document.documentElement.classList.remove('dark'); iconSun.style.display='none'; iconMoon.style.display='inline-block'; }
     }
-
-    // init from system or localStorage
     const saved = localStorage.getItem('tibeb-theme');
-    if(saved === null){
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDark);
-    } else {
-      setTheme(saved === 'dark');
-    }
-
-    themeToggle.addEventListener('click', ()=>{
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('tibeb-theme', isDark ? 'dark' : 'light');
-      setTheme(isDark);
-      themeToggle.animate([{transform:'scale(0.95)'},{transform:'scale(1)'}],{duration:180,easing:'ease-out'});
+    if(saved === null){ const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; setTheme(prefersDark); }
+    else setTheme(saved === 'dark');
+    themeToggle.addEventListener('click', ()=>{ const isDark = document.documentElement.classList.toggle('dark'); localStorage.setItem('tibeb-theme', isDark ? 'dark' : 'light'); setTheme(isDark); themeToggle.animate([{transform:'scale(0.95)'},{transform:'scale(1)'}],{duration:180,easing:'ease-out'});
     });
 
-    // register modal
+    // Register modal handlers
     function openRegister(e){
       const plan = e.currentTarget.dataset.plan || 'Custom plan';
       document.getElementById('selectedPlan').value = plan;
       document.getElementById('modalTitle').textContent = 'Register — ' + plan;
       const overlay = document.getElementById('overlay');
-      overlay.classList.add('show');
-      overlay.setAttribute('aria-hidden','false');
-      // focus on first input
+      overlay.classList.add('show'); overlay.setAttribute('aria-hidden','false');
       setTimeout(()=>document.querySelector('#registerForm input[name="Full name"]').focus(),120);
     }
-    function closeRegister(){
-      const overlay = document.getElementById('overlay');
-      overlay.classList.remove('show');
-      overlay.setAttribute('aria-hidden','true');
-    }
-
+    function closeRegister(){ const overlay = document.getElementById('overlay'); overlay.classList.remove('show'); overlay.setAttribute('aria-hidden','true'); }
     document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeRegister(); });
 
-    // Smooth scroll for anchors
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        const href = a.getAttribute('href');
-        if(href.length>1){
-          const target = document.querySelector(href);
-          if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth',block:'start'}); }
-        }
-      });
-    });
+    // Smooth scroll anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click', e=>{ const href = a.getAttribute('href'); if(href.length>1){ const target = document.querySelector(href); if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth',block:'start'}); } } }); });
+
+    // Attach openRegister to plan buttons (for scenarios when buttons are added after load)
+    document.querySelectorAll('.choose').forEach(btn=>btn.addEventListener('click', openRegister));
   </script>
 </body>
 </html>
