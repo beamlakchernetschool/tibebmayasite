@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tibebmaya Tutoring</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="tibebmayalogo.png" alt="Tibebmaya Logo" class="logo">
+        <nav>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <button id="mode-toggle" class="mode-toggle">🌙</button>
+    </header>
+
+    <section class="hero">
+        <img src="students-group.jpg" alt="Group of Students" class="hero-img">
+        <div class="hero-text">
+            <h1>Welcome to Tibebmaya Tutoring</h1>
+            <p>Empowering students with knowledge and skills for success.</p>
+            <a href="#contact" class="btn">Get Started</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>About Us</h2>
+        <p>At Tibebmaya, we provide personalized tutoring that helps students achieve academic excellence. Our experienced educators tailor lessons to each student's needs.</p>
+    </section>
+
+    <section id="services" class="section">
+        <h2>Our Services</h2>
+        <ul>
+            <li>Math Tutoring</li>
+            <li>Science Coaching</li>
+            <li>Language Learning</li>
+            <li>Test Preparation</li>
+        </ul>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contact Us</h2>
+        <form action="https://formsubmit.co/your-email@example.com" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit" class="btn">Send</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Tibebmaya Tutoring. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
