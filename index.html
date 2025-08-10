@@ -4,348 +4,354 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Tibebmaya — Tutoring & Learning</title>
-  <meta name="description" content="Tibebmaya — polished, modern tutoring for KG–12. Contact our team, view plans, and download the Tibebmaya Flashcard app." />
+  <meta name="description" content="Tibebmaya — polished, modern tutoring for KG–12. Contact our team, view plans, and download the Tibebmaya app and Anki decks." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root{
-      --bg: #f6f8fb;
-      --surface:#ffffff;
-      --muted:#667085;
-      --text:#071022;
-      --accent-1:#34d399;
-      --accent-2:#60a5fa;
-      --glass: rgba(11,18,32,0.04);
-      --radius:14px;
-      --card-radius:18px;
-      --transition:260ms cubic-bezier(.2,.9,.3,1);
+    :root {
+      /* Light Mode Colors - Refined for better aesthetics */
+      --bg: #fefefb; /* A very light, creamy off-white */
+      --surface: #ffffff;
+      --muted: #6b7280;
+      --text: #111827;
+      --accent-1: #16a34a; /* A vibrant, but not overly dark green */
+      --accent-2: #ca8a04; /* A rich, golden yellow */
+      --accent-3: #dc2626; /* A clean red */
+      --glass: rgba(17, 24, 39, 0.04);
+      --card-radius: 1.5rem;
+      --btn-radius: 0.75rem;
+      --transition: 260ms cubic-bezier(.2,.9,.3,1);
       color-scheme: light;
-      font-size:16px;
+      font-size: 16px;
     }
-    html.dark{
-      --bg:#071022;
-      --surface:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      --muted:#9fb0c8;
-      --text:#e8f0f9;
-      --accent-1:#34d399;
-      --accent-2:#60a5fa;
-      --glass: rgba(255,255,255,0.03);
+    html.dark {
+      /* Dark Mode Colors - UNTOUCHED as requested */
+      --bg: #071022;
+      --surface: #10192e;
+      --muted: #9ca3af;
+      --text: #f3f4f6;
+      --accent-1: #4ade80;
+      --accent-2: #facc15;
+      --accent-3: #f87171;
+      --glass: rgba(255, 255, 255, 0.03);
       color-scheme: dark;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.45;transition:background var(--transition),color var(--transition);font-size:16px;
+    /* Basic resets and typography */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+      transition: background var(--transition), color var(--transition);
+      font-size: 1rem;
     }
 
-    /* page container */
-    .wrap{max-width:1100px;margin:0 auto;padding:18px;}
-
-    /* header */
-    header{position:sticky;top:10px;z-index:80;margin-bottom:8px}
-    .navbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px;
-      background:rgba(255,255,255,0.3);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius:14px;
+    /* Custom button styling with gradient and shadows */
+    .btn-primary {
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--btn-radius);
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      color: var(--text);
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4), 0 2px 6px rgba(202, 138, 4, 0.2);
     }
-    html.dark .navbar{
-      background:rgba(7,16,34,0.3);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+    .dark .btn-primary {
+      color: #071022;
+      box-shadow: 0 4px 14px rgba(74, 222, 128, 0.2), 0 2px 6px rgba(250, 204, 21, 0.1);
     }
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand img{height:44px;width:44px;object-fit:contain;border-radius:10px}
-    .brand .title{font-weight:800}
-    .muted-small{color:var(--muted);font-size:13px}
-
-    /* nav */
-    .nav-links{display:flex;gap:12px;align-items:center}
-    .nav-links a{padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600;transition:all var(--transition)}
-    .nav-links a:hover{background:var(--glass);transform:translateY(-3px)}
-
-    /* controls */
-    .controls{display:flex;align-items:center;gap:10px}
-    .apk-link{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#071022;font-weight:700;text-decoration:none}
-    .toggle-btn{width:44px;height:36px;border-radius:10px;border:none;background:var(--surface);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-
-    /* mobile menu */
-    .hamburger{display:none;border:none;background:transparent;padding:8px;border-radius:8px}
-
-    /* hero */
-    .hero{display:grid;grid-template-columns:1fr 480px;gap:28px;align-items:center;padding:10px 0}
-    .hero-card{background:var(--surface);padding:28px;border-radius:var(--card-radius);box-shadow:0 26px 60px rgba(7,16,30,0.06);transition:transform var(--transition)}
-    .hero-card h1{margin:0;font-size:clamp(22px,4.6vw,36px);line-height:1.05}
-    .hero-card p{color:var(--muted);margin-top:12px}
-    .hero-actions{display:flex;gap:12px;margin-top:18px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent-1), var(--accent-2));color:#071022;font-weight:700;border:none;cursor:pointer}
-    .btn-ghost{padding:10px 14px;border-radius:12px;border:1px solid rgba(11,18,32,0.06);background:transparent}
-
-    /* hero visual uses background-image so 2048x1117 fits beautifully */
-    .hero-visual{position:relative;height:420px;border-radius:22px;overflow:hidden;display:flex;align-items:flex-end}
-    .hero-visual::before{content:"";position:absolute;inset:0;background-image:url('students-group.jpg');background-size:cover;background-position:center right;background-repeat:no-repeat;transform:scale(1.03);transition:transform 10s linear}
-    .hero-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,10,20,0.0) 0%, rgba(6,10,20,0.46) 60%)}
-    .visual-content{position:relative;z-index:3;padding:24px;color:white;display:flex;flex-direction:column;gap:8px;width:100%}
-
-    /* sections */
-    main{padding:22px 0}
-    .section-title{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:14px}
-    .plan{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));box-shadow:0 14px 40px rgba(9,18,30,0.06);transition:transform var(--transition)}
-    html.dark .plan{background:var(--surface)}
-    .price{font-weight:800;margin-top:10px}
-    .choose{margin-top:14px}
-
-    .contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
-    .contact-card{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(180deg,white,#fbfdff);box-shadow:0 8px 30px rgba(8,12,20,0.04);transition:transform var(--transition)}
-    .avatar{width:72px;height:72px;border-radius:12px;object-fit:cover}
-
-    footer{padding:28px 0;border-top:1px solid rgba(11,18,32,0.04);margin-top:24px;display:flex;justify-content:space-between;align-items:center}
-
-    /* modal */
-    .overlay{position:fixed;inset:0;background:rgba(3,8,18,0.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
-    .overlay.show{display:flex}
-    .modal{width:100%;max-width:760px;background:var(--surface);border-radius:14px;padding:18px;box-shadow:0 40px 90px rgba(2,8,20,0.6)}
-    .field{display:flex;flex-direction:column;margin-bottom:12px}
-    input,select,textarea{padding:12px;border-radius:10px;border:1px solid rgba(11,18,32,0.06);outline:none}
-
-    /* responsive adjustments for phone */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr;gap:18px}
-      .hero-visual{height:300px}
-      .hero-visual::before{background-position:center}
-      .grid{grid-template-columns:1fr}
-      .contacts{grid-template-columns:1fr}
-      .nav-links{display:none}
-      .hamburger{display:inline-flex}
-      .brand .title{font-size:16px}
-      .wrap{padding:14px}
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 8px 20px rgba(22, 163, 74, 0.6), 0 4px 10px rgba(202, 138, 4, 0.4);
+    }
+    .dark .btn-primary:hover {
+      box-shadow: 0 8px 20px rgba(74, 222, 128, 0.4), 0 4px 10px rgba(250, 204, 21, 0.2);
     }
 
-    @media (max-width:520px){
-      :root{font-size:15px}
-      .hero-visual{height:260px}
-      .brand img{height:40px;width:40px}
-      .hero-card{padding:20px}
-      .btn{width:100%;justify-content:center}
-      .hero-actions{flex-direction:column}
-      .apk-link{display:none}
-      .toggle-btn{width:40px;height:36px}
-      .muted-small{font-size:12px}
-      .modal{padding:14px;border-radius:12px}
+    .btn-ghost {
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--btn-radius);
+      border: 1px solid var(--muted);
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      transition: transform var(--transition), background var(--transition), border-color var(--transition);
     }
-
+    .dark .btn-ghost {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    .btn-ghost:hover {
+      background: var(--glass);
+      transform: translateY(-2px);
+      border-color: var(--text);
+    }
+    .dark .btn-ghost:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Card styling */
+    .card {
+      background: var(--surface);
+      border-radius: var(--card-radius);
+      box-shadow: 0 10px 30px rgba(7, 16, 30, 0.05);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 45px rgba(7, 16, 30, 0.1);
+    }
+    .dark .card {
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .dark .card:hover {
+      box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+    }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <header>
-      <div class="navbar">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div class="brand">
-            <img src="tibebmayalogo.png" alt="Tibebmaya logo">
-            <div>
-              <div class="title">Tibebmaya</div>
-              <div class="muted-small">Personalized tutoring • KG–12</div>
-            </div>
+<body class="antialiased font-sans bg-[var(--bg)] text-[var(--text)] transition-colors duration-500">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="sticky top-4 z-50 mb-8">
+      <div class="bg-[var(--surface)]/[0.8] backdrop-blur-md rounded-2xl shadow-lg p-3 sm:p-4 flex justify-between items-center transition-colors duration-500">
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <img src="tibebmayalogo.png" alt="Tibebmaya logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-lg">
+          <div>
+            <div class="font-extrabold text-xl sm:text-2xl tracking-tight">Tibebmaya</div>
+            <div class="text-sm text-[var(--muted)] hidden sm:block">Personalized tutoring • KG–12</div>
           </div>
         </div>
 
-        <div style="display:flex;align-items:center;gap:10px">
-          <nav class="nav-links" aria-label="Main navigation">
-            <a href="#about">About</a>
-            <a href="#plans">Plans</a>
-            <a href="#contact">Contact</a>
-          </nav>
+        <nav class="hidden md:flex items-center space-x-6 lg:space-x-8">
+          <a href="#about" class="text-sm font-semibold hover:text-[var(--accent-1)] transition-colors duration-200">About</a>
+          <a href="#plans" class="text-sm font-semibold hover:text-[var(--accent-1)] transition-colors duration-200">Plans</a>
+          <a href="#contact" class="text-sm font-semibold hover:text-[var(--accent-1)] transition-colors duration-200">Contact</a>
+        </nav>
 
-          <button class="hamburger" id="menuBtn" aria-label="Open menu" title="Menu">☰</button>
-
-          <div class="controls">
-            <a class="apk-link" href="custom_anki_decks.zip" download>Download Custom Anki Decks</a>
-            <button id="themeToggle" class="toggle-btn" aria-label="Toggle theme" title="Toggle theme">
-              <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:none"><path d="M12 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 22v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.22 4.22L2.8 2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21.2 21.2l-1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
-              <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <a href="tibebmaya.apk" download class="hidden sm:inline-flex btn-primary items-center text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download App
+          </a>
+          <button id="themeToggle" class="toggle-btn w-10 h-10 flex items-center justify-center rounded-xl bg-[var(--bg)] dark:bg-[var(--surface)] transition-colors duration-500 border border-[var(--muted)]/[0.2]">
+            <svg id="iconSun" class="w-6 h-6 text-yellow-500" viewBox="0 0 24 24" fill="none" style="display:none"><path d="M12 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 22v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.22 4.22L2.8 2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21.2 21.2l-1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+            <svg id="iconMoon" class="w-6 h-6 text-slate-400" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </div>
     </header>
 
-    <section class="hero">
-      <div class="hero-card">
-        <h1>Polished, dependable tutoring for curious learners</h1>
-        <div class="muted-small" style="margin-top:8px">Small classes • Expert tutors • Engaging lesson plans</div>
-        <p style="margin-top:12px;color:var(--muted)">Tibebmaya blends evidence-based teaching with modern digital tools — like our flashcard app — to help learners build strong foundations and confidence. Flexible online or in-person sessions with clear progress tracking.</p>
-
-        <div class="hero-actions">
-          <button class="btn" onclick="document.querySelector('#plans').scrollIntoView({behavior:'smooth'})">View Plans</button>
-          <button class="btn-ghost" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Meet the team</button>
-        </div>
-
-        <dl style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap">
-          <div><dt class="muted-small">Subjects</dt><dd>Math, Science, English, Reading</dd></div>
-          <div><dt class="muted-small">Format</dt><dd>Group & private</dd></div>
-          <div><dt class="muted-small">Location</dt><dd>Online & in-person</dd></div>
-        </dl>
-      </div>
-
-      <div class="hero-visual" aria-hidden="true">
-        <div class="visual-content">
-          <div style="background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));padding:10px 14px;border-radius:12px;display:inline-block">
-            <div style="font-weight:800">Tibebmaya Flashcards</div>
-            <div class="muted-small">Spaced repetition and curated decks</div>
+    <main class="space-y-16 lg:space-y-24">
+      <!-- Hero Section -->
+      <section class="bg-yellow-50 dark:bg-transparent rounded-[var(--card-radius)] p-6">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div class="card p-6 sm:p-8 lg:p-10">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight">
+              Polished, dependable tutoring for curious learners.
+            </h1>
+            <p class="mt-4 text-lg text-[var(--muted)]">
+              Tibebmaya blends evidence-based teaching with modern digital tools to help learners build strong foundations and confidence.
+            </p>
+            <div class="mt-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+              <a href="#plans" class="btn-primary flex items-center justify-center">
+                View Plans
+              </a>
+              <a href="#contact" class="btn-ghost flex items-center justify-center">
+                Meet the team
+              </a>
+            </div>
+            <dl class="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm text-[var(--muted)]">
+              <div><dt class="font-bold text-[var(--text)]">Subjects</dt><dd>Math, Science, English, Reading</dd></div>
+              <div><dt class="font-bold text-[var(--text)]">Format</dt><dd>Group & private</dd></div>
+              <div><dt class="font-bold text-[var(--text)]">Location</dt><dd>Online & in-person</dd></div>
+            </dl>
           </div>
-
-          <div style="margin-top:auto;display:flex;gap:10px">
-            <a class="btn" href="custom_anki_decks.zip" download>Download Custom Anki Decks</a>
-          </div>
-        </div>
-      </div>
-    </section>
-        <main>
-      <section id="about" style="margin-top:18px">
-        <div class="section-title">
-          <div>
-            <h2 style="margin:0">About Tibebmaya</h2>
-            <div class="muted-small">Supportive, modern tutoring customized to each learner.</div>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:18px;margin-top:14px;flex-wrap:wrap">
-          <div style="flex:1;min-width:260px">
-            <p class="muted-small">Tibebmaya was founded to make high-quality tutoring accessible and friendly. Our approach mixes hands-on activities, diagnostic assessments, and targeted practice. Tutors provide clear learning goals and frequent progress reports so families always know the next steps.</p>
-          </div>
-          <div style="max-width:360px">
-            <p class="muted-small">We value transparency — simple pricing, easy registration, and digital tools that keep learning going between lessons. Replace these sample images in the repo to fully brand the site.</p>
+          <div class="hidden lg:block relative h-[480px] rounded-[3rem] overflow-hidden shadow-2xl">
+            <img src="students-group.jpg" alt="A group of students learning" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
           </div>
         </div>
       </section>
 
-      <section id="plans" style="margin-top:22px">
-        <div class="section-title">
-          <h2 style="margin:0">Plans</h2>
-          <div class="muted-small">Choose the plan that fits your child's grade level. Click "Choose plan" to register.</div>
+      <!-- Plans Section -->
+      <section id="plans" class="bg-gray-50 dark:bg-transparent rounded-[var(--card-radius)] p-6">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-[var(--accent-1)]">Our Plans</h2>
+          <p class="mt-2 text-[var(--muted)]">Choose the plan that fits your child's grade level. Click "Choose plan" to register.</p>
         </div>
-
-        <div class="grid">
-          <article class="plan">
-            <h3>Kindergarten (KG)</h3>
-            <div class="muted-small">Play-based foundations: early literacy, number sense, and social skills. Short, engaging sessions with parent notes after each lesson.</div>
-            <div class="price">200 birr / hour</div>
-            <button class="choose" data-plan="Kindergarten (KG)" onclick="openRegister(event)">Choose plan</button>
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <article class="card p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-bold">Kindergarten (KG)</h3>
+              <p class="mt-2 text-[var(--muted)]">Play-based foundations: early literacy, number sense, and social skills. Short, engaging sessions with parent notes after each lesson.</p>
+            </div>
+            <div class="mt-6">
+              <div class="text-3xl font-extrabold text-[var(--accent-1)]">200 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <button class="choose mt-4 w-full btn-primary" data-plan="Kindergarten (KG)">Choose plan</button>
+            </div>
           </article>
-
-          <article class="plan">
-            <h3>Grades 1–4</h3>
-            <div class="muted-small">Reading fluency, basic arithmetic, and confidence-building. Interactive worksheets and friendly assessments.</div>
-            <div class="price">200 birr / hour</div>
-            <button class="choose" data-plan="Grades 1–4" onclick="openRegister(event)">Choose plan</button>
+          <article class="card p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-bold">Grades 1–4</h3>
+              <p class="mt-2 text-[var(--muted)]">Reading fluency, basic arithmetic, and confidence-building. Interactive worksheets and friendly assessments.</p>
+            </div>
+            <div class="mt-6">
+              <div class="text-3xl font-extrabold text-[var(--accent-1)]">200 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <button class="choose mt-4 w-full btn-primary" data-plan="Grades 1–4">Choose plan</button>
+            </div>
           </article>
-
-          <article class="plan">
-            <h3>Grades 5–6</h3>
-            <div class="muted-small">Deeper math concepts, comprehension, and study habits for middle school readiness.</div>
-            <div class="price">250 birr / hour</div>
-            <button class="choose" data-plan="Grades 5–6" onclick="openRegister(event)">Choose plan</button>
+          <article class="card p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-bold">Grades 5–6</h3>
+              <p class="mt-2 text-[var(--muted)]">Deeper math concepts, comprehension, and study habits for middle school readiness.</p>
+            </div>
+            <div class="mt-6">
+              <div class="text-3xl font-extrabold text-[var(--accent-2)]">250 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <button class="choose mt-4 w-full btn-primary" data-plan="Grades 5–6">Choose plan</button>
+            </div>
           </article>
-
-          <article class="plan">
-            <h3>Grades 7–8</h3>
-            <div class="muted-small">Pre-algebra, science fundamentals, and critical reading to prepare for high school.</div>
-            <div class="price">300 birr / hour</div>
-            <button class="choose" data-plan="Grades 7–8" onclick="openRegister(event)">Choose plan</button>
+          <article class="card p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-bold">Grades 7–8</h3>
+              <p class="mt-2 text-[var(--muted)]">Pre-algebra, science fundamentals, and critical reading to prepare for high school.</p>
+            </div>
+            <div class="mt-6">
+              <div class="text-3xl font-extrabold text-[var(--accent-2)]">300 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <button class="choose mt-4 w-full btn-primary" data-plan="Grades 7–8">Choose plan</button>
+            </div>
           </article>
-
-          <article class="plan">
-            <h3>Grades 9–12</h3>
-            <div class="muted-small">Subject tutoring for high school — algebra, geometry, physics, chemistry, and advanced English. Exam prep and college readiness coaching.</div>
-            <div class="price">350 birr / hour</div>
-            <button class="choose" data-plan="Grades 9–12" onclick="openRegister(event)">Choose plan</button>
+          <article class="card p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-bold">Grades 9–12</h3>
+              <p class="mt-2 text-[var(--muted)]">Subject tutoring for high school — algebra, geometry, physics, chemistry, and advanced English. Exam prep and college readiness coaching.</p>
+            </div>
+            <div class="mt-6">
+              <div class="text-3xl font-extrabold text-[var(--accent-3)]">350 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <button class="choose mt-4 w-full btn-primary" data-plan="Grades 9–12">Choose plan</button>
+            </div>
+          </article>
+          <article class="card p-6 bg-gradient-to-br from-[var(--accent-1)]/[0.2] via-[var(--accent-2)]/[0.2] to-[var(--accent-3)]/[0.2] dark:from-[var(--accent-1)]/[0.3] dark:via-[var(--accent-2)]/[0.3] dark:to-[var(--accent-3)]/[0.3] flex items-center justify-center text-center">
+            <div>
+              <h3 class="text-2xl font-bold text-[var(--text)]">Need a custom plan?</h3>
+              <p class="mt-2 text-[var(--text)]">Contact us to create a personalized learning path for your child.</p>
+              <button class="choose mt-4 w-full btn-primary" data-plan="Custom plan">Contact us</button>
+            </div>
           </article>
         </div>
       </section>
 
-      <section id="contact" style="margin-top:24px">
-        <h2 style="margin:0">Contact & Team</h2>
-        <p class="muted-small" style="margin-top:8px">Replace the headshots in the repo to personalize the team cards (gelgelo-headshot.png, beamlak-headshot.png, fikadu-headshot.png).</p>
+      <!-- App & Anki Decks Section -->
+      <section id="app-downloads" class="bg-green-50 dark:bg-transparent rounded-[var(--card-radius)] p-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="card p-6 text-center">
+            <div class="flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-[var(--accent-1)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+            </div>
+            <h3 class="text-2xl font-bold">Tibebmaya App</h3>
+            <p class="mt-2 text-[var(--muted)]">Take your learning with you! Our app provides a suite of tools to help you manage your studies and track your progress.</p>
+            <a href="tibebmaya.apk" download class="btn-primary mt-4 inline-flex items-center text-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download App
+            </a>
+          </div>
+          <div class="card p-6 text-center">
+            <div class="flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-[var(--accent-2)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M10 12l2-2 2 2"></path><path d="M12 10v6"></path></svg>
+            </div>
+            <h3 class="text-2xl font-bold">Custom Anki Decks</h3>
+            <p class="mt-2 text-[var(--muted)]">Download our curated flashcard decks, meticulously crafted to align with our tutoring curriculum and optimize your study sessions.</p>
+            <a href="custom_anki_decks.zip" download class="btn-primary mt-4 inline-flex items-center text-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M10 12l2-2 2 2"></path><path d="M12 10v6"></path></svg>
+              Download Decks
+            </a>
+          </div>
+        </div>
+      </section>
 
-        <div class="contacts">
-          <div class="contact-card">
-            <img class="avatar" src="gelgelo-headshot.png" alt="Gelgelo Askale">
+      <!-- Contact & Team Section -->
+      <section id="contact" class="bg-red-50 dark:bg-transparent rounded-[var(--card-radius)] p-6">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-[var(--accent-2)]">Contact & Team</h2>
+          <p class="mt-2 text-[var(--muted)]">Meet our dedicated team of educators.</p>
+        </div>
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="card p-6 text-center sm:text-left flex flex-col sm:flex-row items-center sm:items-start gap-4">
+            <img class="w-20 h-20 rounded-full object-cover" src="gelgelo-headshot.png" alt="Gelgelo Askale">
             <div>
-              <div style="font-weight:700">Gelgelo Askale</div>
-              <div class="muted-small">Tutor • Early years specialist</div>
-              <div style="margin-top:8px">gelgelo@example.com</div>
-              <div class="muted-small">+251 911 123 456</div>
+              <h3 class="text-lg font-bold">Gelgelo Askale</h3>
+              <div class="text-sm text-[var(--muted)]">Tutor • Early years specialist</div>
+              <div class="mt-2 text-[var(--text)]">gelgelo@example.com</div>
+              <div class="text-sm text-[var(--muted)]">+251 911 123 456</div>
             </div>
           </div>
-
-          <div class="contact-card">
-            <img class="avatar" src="beamlak-headshot.png" alt="Beamlak Chernet">
+          <div class="card p-6 text-center sm:text-left flex flex-col sm:flex-row items-center sm:items-start gap-4">
+            <img class="w-20 h-20 rounded-full object-cover" src="beamlak-headshot.png" alt="Beamlak Chernet">
             <div>
-              <div style="font-weight:700">Beamlak Chernet</div>
-              <div class="muted-small">Tutor • Math & Science</div>
-              <div style="margin-top:8px">beamlak@example.com</div>
-              <div class="muted-small">+251 922 234 567</div>
+              <h3 class="text-lg font-bold">Beamlak Chernet</h3>
+              <div class="text-sm text-[var(--muted)]">Tutor • Math & Science</div>
+              <div class="mt-2 text-[var(--text)]">beamlak@example.com</div>
+              <div class="text-sm text-[var(--muted)]">+251 922 234 567</div>
             </div>
           </div>
-
-          <div class="contact-card">
-            <img class="avatar" src="fikadu-headshot.png" alt="Fikadu Asebe">
+          <div class="card p-6 text-center sm:text-left flex flex-col sm:flex-row items-center sm:items-start gap-4">
+            <img class="w-20 h-20 rounded-full object-cover" src="fikadu-headshot.png" alt="Fikadu Asebe">
             <div>
-              <div style="font-weight:700">Fikadu Asebe</div>
-              <div class="muted-small">Tutor • English & Test Prep</div>
-              <div style="margin-top:8px">fikadu@example.com</div>
-              <div class="muted-small">+251 933 345 678</div>
+              <h3 class="text-lg font-bold">Fikadu Asebe</h3>
+              <div class="text-sm text-[var(--muted)]">Tutor • English & Test Prep</div>
+              <div class="mt-2 text-[var(--text)]">fikadu@example.com</div>
+              <div class="text-sm text-[var(--muted)]">+251 933 345 678</div>
             </div>
           </div>
         </div>
       </section>
     </main>
 
-    <footer>
-      <div class="muted-small">© Tibebmaya — made with care</div>
-      <div style="display:flex;gap:12px;align-items:center">
-        <a href="#plans">Plans</a>
-        <a href="#contact">Contact</a>
+    <footer class="mt-16 py-8 border-t border-[var(--muted)]/[0.2] text-center sm:text-left sm:flex justify-between items-center text-sm text-[var(--muted)]">
+      <div>© 2024 Tibebmaya. All rights reserved.</div>
+      <div class="mt-4 sm:mt-0 flex justify-center space-x-4">
+        <a href="#plans" class="hover:text-[var(--accent-1)] transition-colors duration-200">Plans</a>
+        <a href="#contact" class="hover:text-[var(--accent-1)] transition-colors duration-200">Contact</a>
       </div>
     </footer>
   </div>
 
   <!-- Register modal and form -->
-  <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal" role="document">
-      <button onclick="closeRegister()" style="float:right;opacity:0.7;border:none;background:transparent;font-size:18px;cursor:pointer">✕</button>
-      <h2 id="modalTitle">Register</h2>
+  <div id="overlay" class="fixed inset-0 bg-[var(--text)]/[0.5] dark:bg-[var(--text)]/[0.8] flex items-center justify-center p-4 z-[100] transition-opacity duration-300 opacity-0 pointer-events-none" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal w-full max-w-xl card p-6" role="document">
+      <button onclick="closeRegister()" class="absolute top-4 right-4 text-[var(--muted)] hover:text-[var(--text)] transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+      <h2 id="modalTitle" class="text-2xl font-bold mb-4">Register</h2>
       <form id="registerForm" action="https://formsubmit.co/tibebmayateam@gmail.com" method="POST">
         <input type="hidden" name="_subject" value="New registration from Tibebmaya website">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" id="selectedPlan" name="Plan" value="">
 
-        <div class="field">
-          <label class="muted-small">Full name</label>
-          <input type="text" name="Full name" required>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-[var(--muted)]">Full name</label>
+          <input type="text" name="Full name" required class="mt-1 block w-full rounded-md border-[var(--muted)]/[0.3] bg-[var(--bg)] text-[var(--text)] shadow-sm focus:border-[var(--accent-1)] focus:ring-[var(--accent-1)] sm:text-sm p-2">
         </div>
-        <div class="field" style="display:flex;gap:10px">
-          <div style="flex:1">
-            <label class="muted-small">Email</label>
-            <input type="email" name="Email" required>
+        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-[var(--muted)]">Email</label>
+            <input type="email" name="Email" required class="mt-1 block w-full rounded-md border-[var(--muted)]/[0.3] bg-[var(--bg)] text-[var(--text)] shadow-sm focus:border-[var(--accent-1)] focus:ring-[var(--accent-1)] sm:text-sm p-2">
           </div>
-          <div style="flex:1">
-            <label class="muted-small">Phone number</label>
-            <input type="tel" name="Phone" required>
+          <div>
+            <label class="block text-sm font-medium text-[var(--muted)]">Phone number</label>
+            <input type="tel" name="Phone" required class="mt-1 block w-full rounded-md border-[var(--muted)]/[0.3] bg-[var(--bg)] text-[var(--text)] shadow-sm focus:border-[var(--accent-1)] focus:ring-[var(--accent-1)] sm:text-sm p-2">
           </div>
         </div>
-        <div class="field">
-          <label class="muted-small">Grade level</label>
-          <select name="Grade level" required>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-[var(--muted)]">Grade level</label>
+          <select name="Grade level" required class="mt-1 block w-full rounded-md border-[var(--muted)]/[0.3] bg-[var(--bg)] text-[var(--text)] shadow-sm focus:border-[var(--accent-1)] focus:ring-[var(--accent-1)] sm:text-sm p-2">
             <option value="KG">Kindergarten</option>
             <option value="1-4">Grades 1–4</option>
             <option value="5-6">Grades 5–6</option>
@@ -354,87 +360,77 @@
           </select>
         </div>
 
-        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+        <div class="flex justify-end space-x-4 mt-6">
           <button type="button" class="btn-ghost" onclick="closeRegister()">Cancel</button>
-          <button type="submit" class="btn">Submit registration</button>
+          <button type="submit" class="btn-primary">Submit registration</button>
         </div>
       </form>
     </div>
   </div>
 
   <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const navLinks = document.querySelector('.nav-links');
-    menuBtn && menuBtn.addEventListener('click', ()=>{
-      const visible = navLinks.style.display === 'flex';
-      navLinks.style.display = visible ? 'none' : 'flex';
-      if(!visible){
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position='absolute';
-        navLinks.style.right='18px';
-        navLinks.style.top='70px';
-        navLinks.style.background='var(--surface)';
-        navLinks.style.padding='12px';
-        navLinks.style.borderRadius='12px';
-        navLinks.style.boxShadow='0 12px 40px rgba(7,16,30,0.08)';
-      }
-    });
-
     const themeToggle = document.getElementById('themeToggle');
     const iconSun = document.getElementById('iconSun');
     const iconMoon = document.getElementById('iconMoon');
-    function setTheme(dark){
-      if(dark){
+    
+    function setTheme(dark) {
+      if (dark) {
         document.documentElement.classList.add('dark');
-        iconSun.style.display='inline-block';
-        iconMoon.style.display='none';
+        iconSun.style.display = 'inline-block';
+        iconMoon.style.display = 'none';
       } else {
         document.documentElement.classList.remove('dark');
-        iconSun.style.display='none';
-        iconMoon.style.display='inline-block';
+        iconSun.style.display = 'none';
+        iconMoon.style.display = 'inline-block';
       }
     }
+    
+    // Check local storage or system preference on load
     const saved = localStorage.getItem('tibeb-theme');
-    if(saved === null){
+    if (saved === null) {
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       setTheme(prefersDark);
-    } else setTheme(saved === 'dark');
-    themeToggle.addEventListener('click', ()=>{
+    } else {
+      setTheme(saved === 'dark');
+    }
+    
+    // Theme toggle button click handler
+    themeToggle.addEventListener('click', () => {
       const isDark = document.documentElement.classList.toggle('dark');
       localStorage.setItem('tibeb-theme', isDark ? 'dark' : 'light');
       setTheme(isDark);
-      themeToggle.animate([{transform:'scale(0.95)'},{transform:'scale(1)'}],{duration:180,easing:'ease-out'});
+      themeToggle.animate([{ transform: 'scale(0.95)' }, { transform: 'scale(1)' }], { duration: 180, easing: 'ease-out' });
     });
 
-    function openRegister(e){
+    const overlay = document.getElementById('overlay');
+    function openRegister(e) {
       const plan = e.currentTarget.dataset.plan || 'Custom plan';
       document.getElementById('selectedPlan').value = plan;
       document.getElementById('modalTitle').textContent = 'Register — ' + plan;
-      const overlay = document.getElementById('overlay');
-      overlay.classList.add('show'); overlay.setAttribute('aria-hidden','false');
-      setTimeout(()=>document.querySelector('#registerForm input[name="Full name"]').focus(),120);
+      overlay.classList.add('show');
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.setAttribute('aria-hidden', 'false');
+      setTimeout(() => document.querySelector('#registerForm input[name="Full name"]').focus(), 120);
     }
-    function closeRegister(){
-      const overlay = document.getElementById('overlay');
+    function closeRegister() {
       overlay.classList.remove('show');
-      overlay.setAttribute('aria-hidden','true');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      overlay.setAttribute('aria-hidden', 'true');
     }
-    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeRegister(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRegister(); });
 
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        const href = a.getAttribute('href');
-        if(href.length>1){
-          const target = document.querySelector(href);
-          if(target){
-            e.preventDefault();
-            target.scrollIntoView({behavior:'smooth',block:'start'});
-          }
+    document.querySelectorAll('.choose').forEach(btn => btn.addEventListener('click', openRegister));
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
         }
       });
     });
-
-    document.querySelectorAll('.choose').forEach(btn=>btn.addEventListener('click', openRegister));
   </script>
 </body>
 </html>
