@@ -9,6 +9,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP core + ScrollTrigger from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+
   <style>
     :root {
       /* Light Mode Colors - Refined for better aesthetics */
@@ -116,6 +121,56 @@
     .dark .card:hover {
       box-shadow: 0 15px 45px rgba(0,0,0,0.4);
     }
+
+    /* ----------------------
+       Animation helper styles
+       ---------------------- */
+
+    /* split chars */
+    .char { display:inline-block; white-space:pre; will-change: transform, opacity; }
+
+    /* gradient / shiny text (uses site colors) */
+    .animated-gradient-text { display:inline-block; background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradientShift 6s linear infinite; }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* shiny */
+    .shiny {
+      display:inline-block;
+      background-image: linear-gradient(120deg, rgba(255,255,255,0) 35%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0) 65%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shineMove 4s linear infinite;
+    }
+    @keyframes shineMove {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+
+    /* decrypt hover */
+    .decrypt-letter { display:inline-block; transition: color 160ms linear; will-change: contents; }
+    .decrypt-encrypted { color: var(--muted); }
+    .decrypt-revealed { color: var(--text); font-weight:700; }
+
+    /* countup */
+    .count-up { font-variant-numeric: tabular-nums; }
+
+    /* accessible reduction */
+    @media (prefers-reduced-motion: reduce) {
+      .animated-gradient-text, .shiny { animation: none !important; }
+      .char { transition: none !important; }
+    }
+
+    /* mobile performance: limit heavy shadows + transforms */
+    @media (pointer: coarse) {
+      .card:hover { transform: none; box-shadow: 0 10px 20px rgba(7,16,30,0.05); }
+    }
+
   </style>
 </head>
 <body class="antialiased font-sans bg-[var(--bg)] text-[var(--text)] transition-colors duration-500">
@@ -154,12 +209,16 @@
       <section class="bg-yellow-50 dark:bg-transparent rounded-[var(--card-radius)] p-6">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div class="card p-6 sm:p-8 lg:p-10">
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight">
+            <!-- HERO TITLE: character-split animation (desktop only) -->
+            <h1 id="heroTitle" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight">
               Polished, dependable tutoring for curious learners.
             </h1>
-            <p class="mt-4 text-lg text-[var(--muted)]">
+
+            <!-- HERO SUBTITLE: short typewriter (desktop) -->
+            <p id="heroSubtitle" class="mt-4 text-lg text-[var(--muted)]" data-typetext="Tibebmaya blends evidence-based teaching with modern digital tools to help learners build strong foundations and confidence.">
               Tibebmaya blends evidence-based teaching with modern digital tools to help learners build strong foundations and confidence.
             </p>
+
             <div class="mt-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <a href="#plans" class="btn-primary flex items-center justify-center">
                 View Plans
@@ -184,63 +243,63 @@
       <!-- Plans Section -->
       <section id="plans" class="bg-gray-50 dark:bg-transparent rounded-[var(--card-radius)] p-6">
         <div class="text-center">
-          <h2 class="text-3xl font-bold tracking-tight text-[var(--accent-1)]">Our Plans</h2>
+          <h2 class="text-3xl font-bold tracking-tight text-[var(--accent-1)] section-title">Our Plans</h2>
           <p class="mt-2 text-[var(--muted)]">Choose the plan that fits your child's grade level. Click "Choose plan" to register.</p>
         </div>
         <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <article class="card p-6 flex flex-col justify-between">
             <div>
-              <h3 class="text-xl font-bold">Kindergarten (KG)</h3>
+              <h3 class="text-xl font-bold plan-title">Kindergarten (KG)</h3>
               <p class="mt-2 text-[var(--muted)]">Play-based foundations: early literacy, number sense, and social skills. Short, engaging sessions with parent notes after each lesson.</p>
             </div>
             <div class="mt-6">
-              <div class="text-3xl font-extrabold text-[var(--accent-1)]">200 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <div class="text-3xl font-extrabold text-[var(--accent-1)]"><span class="count-up" data-to="200">200</span> birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
               <button class="choose mt-4 w-full btn-primary" data-plan="Kindergarten (KG)">Choose plan</button>
             </div>
           </article>
           <article class="card p-6 flex flex-col justify-between">
             <div>
-              <h3 class="text-xl font-bold">Grades 1–4</h3>
+              <h3 class="text-xl font-bold plan-title">Grades 1–4</h3>
               <p class="mt-2 text-[var(--muted)]">Reading fluency, basic arithmetic, and confidence-building. Interactive worksheets and friendly assessments.</p>
             </div>
             <div class="mt-6">
-              <div class="text-3xl font-extrabold text-[var(--accent-1)]">200 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <div class="text-3xl font-extrabold text-[var(--accent-1)]"><span class="count-up" data-to="200">200</span> birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
               <button class="choose mt-4 w-full btn-primary" data-plan="Grades 1–4">Choose plan</button>
             </div>
           </article>
           <article class="card p-6 flex flex-col justify-between">
             <div>
-              <h3 class="text-xl font-bold">Grades 5–6</h3>
+              <h3 class="text-xl font-bold plan-title">Grades 5–6</h3>
               <p class="mt-2 text-[var(--muted)]">Deeper math concepts, comprehension, and study habits for middle school readiness.</p>
             </div>
             <div class="mt-6">
-              <div class="text-3xl font-extrabold text-[var(--accent-2)]">250 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <div class="text-3xl font-extrabold text-[var(--accent-2)]"><span class="count-up" data-to="250">250</span> birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
               <button class="choose mt-4 w-full btn-primary" data-plan="Grades 5–6">Choose plan</button>
             </div>
           </article>
           <article class="card p-6 flex flex-col justify-between">
             <div>
-              <h3 class="text-xl font-bold">Grades 7–8</h3>
+              <h3 class="text-xl font-bold plan-title">Grades 7–8</h3>
               <p class="mt-2 text-[var(--muted)]">Pre-algebra, science fundamentals, and critical reading to prepare for high school.</p>
             </div>
             <div class="mt-6">
-              <div class="text-3xl font-extrabold text-[var(--accent-2)]">300 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <div class="text-3xl font-extrabold text-[var(--accent-2)]"><span class="count-up" data-to="300">300</span> birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
               <button class="choose mt-4 w-full btn-primary" data-plan="Grades 7–8">Choose plan</button>
             </div>
           </article>
           <article class="card p-6 flex flex-col justify-between">
             <div>
-              <h3 class="text-xl font-bold">Grades 9–12</h3>
+              <h3 class="text-xl font-bold plan-title">Grades 9–12</h3>
               <p class="mt-2 text-[var(--muted)]">Subject tutoring for high school — algebra, geometry, physics, chemistry, and advanced English. Exam prep and college readiness coaching.</p>
             </div>
             <div class="mt-6">
-              <div class="text-3xl font-extrabold text-[var(--accent-3)]">350 birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
+              <div class="text-3xl font-extrabold text-[var(--accent-3)]"><span class="count-up" data-to="350">350</span> birr <span class="text-base font-normal text-[var(--muted)]">/ hour</span></div>
               <button class="choose mt-4 w-full btn-primary" data-plan="Grades 9–12">Choose plan</button>
             </div>
           </article>
           <article class="card p-6 bg-gradient-to-br from-[var(--accent-1)]/[0.2] via-[var(--accent-2)]/[0.2] to-[var(--accent-3)]/[0.2] dark:from-[var(--accent-1)]/[0.3] dark:via-[var(--accent-2)]/[0.3] dark:to-[var(--accent-3)]/[0.3] flex items-center justify-center text-center">
             <div>
-              <h3 class="text-2xl font-bold text-[var(--text)]">Need a custom plan?</h3>
+              <h3 class="text-2xl font-bold text-[var(--text)]"><span class="animated-gradient-text" style="background-image:linear-gradient(90deg,var(--accent-1),var(--accent-2),var(--accent-3));">Need a custom plan?</span></h3>
               <p class="mt-2 text-[var(--text)]">Contact us to create a personalized learning path for your child.</p>
               <button class="choose mt-4 w-full btn-primary" data-plan="Custom plan">Contact us</button>
             </div>
@@ -255,7 +314,7 @@
             <div class="flex items-center justify-center mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-[var(--accent-1)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
             </div>
-            <h3 class="text-2xl font-bold">Tibebmaya App</h3>
+            <h3 class="text-2xl font-bold"><span class="shiny" style="background-image: linear-gradient(90deg,var(--accent-1), var(--accent-2));">Tibebmaya App</span></h3>
             <p class="mt-2 text-[var(--muted)]">Take your learning with you! Our app provides a suite of tools to help you manage your studies and track your progress.</p>
             <a href="tibebmaya.apk" download class="btn-primary mt-4 inline-flex items-center text-sm">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -266,7 +325,7 @@
             <div class="flex items-center justify-center mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-[var(--accent-2)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M10 12l2-2 2 2"></path><path d="M12 10v6"></path></svg>
             </div>
-            <h3 class="text-2xl font-bold">Custom Anki Decks</h3>
+            <h3 class="text-2xl font-bold"><span class="animated-gradient-text" style="background-image: linear-gradient(90deg,var(--accent-2),var(--accent-3));">Custom Anki Decks</span></h3>
             <p class="mt-2 text-[var(--muted)]">Download our curated flashcard decks, meticulously crafted to align with our tutoring curriculum and optimize your study sessions.</p>
             <a href="custom_anki_decks.zip" download class="btn-primary mt-4 inline-flex items-center text-sm">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M10 12l2-2 2 2"></path><path d="M12 10v6"></path></svg>
@@ -279,14 +338,14 @@
       <!-- Contact & Team Section -->
       <section id="contact" class="bg-red-50 dark:bg-transparent rounded-[var(--card-radius)] p-6">
         <div class="text-center">
-          <h2 class="text-3xl font-bold tracking-tight text-[var(--accent-2)]">Contact & Team</h2>
+          <h2 class="text-3xl font-bold tracking-tight text-[var(--accent-2)] section-title">Contact & Team</h2>
           <p class="mt-2 text-[var(--muted)]">Meet our dedicated team of educators.</p>
         </div>
         <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div class="card p-6 text-center sm:text-left flex flex-col sm:flex-row items-center sm:items-start gap-4">
             <img class="w-20 h-20 rounded-full object-cover" src="gelgelo-headshot.png" alt="Gelgelo Askale">
             <div>
-              <h3 class="text-lg font-bold">Gelgelo Askale</h3>
+              <h3 class="text-lg font-bold team-name"><span class="decrypt" data-text="Gelgelo Askale">Gelgelo Askale</span></h3>
               <div class="text-sm text-[var(--muted)]">Tutor • Early years specialist</div>
               <div class="mt-2 text-[var(--text)]">gelgelo@example.com</div>
               <div class="text-sm text-[var(--muted)]">+251 911 123 456</div>
@@ -295,7 +354,7 @@
           <div class="card p-6 text-center sm:text-left flex flex-col sm:flex-row items-center sm:items-start gap-4">
             <img class="w-20 h-20 rounded-full object-cover" src="beamlak-headshot.png" alt="Beamlak Chernet">
             <div>
-              <h3 class="text-lg font-bold">Beamlak Chernet</h3>
+              <h3 class="text-lg font-bold team-name"><span class="decrypt" data-text="Beamlak Chernet">Beamlak Chernet</span></h3>
               <div class="text-sm text-[var(--muted)]">Tutor • Math & Science</div>
               <div class="mt-2 text-[var(--text)]">beamlak@example.com</div>
               <div class="text-sm text-[var(--muted)]">+251 922 234 567</div>
@@ -304,7 +363,7 @@
           <div class="card p-6 text-center sm:text-left flex flex-col sm:flex-row items-center sm:items-start gap-4">
             <img class="w-20 h-20 rounded-full object-cover" src="fikadu-headshot.png" alt="Fikadu Asebe">
             <div>
-              <h3 class="text-lg font-bold">Fikadu Asebe</h3>
+              <h3 class="text-lg font-bold team-name"><span class="decrypt" data-text="Fikadu Asebe">Fikadu Asebe</span></h3>
               <div class="text-sm text-[var(--muted)]">Tutor • English & Test Prep</div>
               <div class="mt-2 text-[var(--text)]">fikadu@example.com</div>
               <div class="text-sm text-[var(--muted)]">+251 933 345 678</div>
@@ -369,6 +428,9 @@
   </div>
 
   <script>
+    /***********************
+     * Theme + modal logic (unchanged)
+     ***********************/
     const themeToggle = document.getElementById('themeToggle');
     const iconSun = document.getElementById('iconSun');
     const iconMoon = document.getElementById('iconMoon');
@@ -432,5 +494,269 @@
       });
     });
   </script>
+
+  <!-- -------------------------
+       Animation initialisation
+       ------------------------- -->
+  <script>
+    (function () {
+      // Respect reduced motion or touch devices
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isTouch = (('ontouchstart' in window) || window.matchMedia('(pointer: coarse)').matches);
+
+      // If user prefers reduced motion OR device is touch, skip heavy animations (we still keep subtle css)
+      const enableAnimations = !prefersReduced && !isTouch;
+
+      // ensure GSAP ScrollTrigger is available
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+      }
+
+      /* ------------
+         1) Hero split + char animation (SplitText-like)
+         ------------
+         We'll split the hero title characters into spans and animate them when the hero enters view.
+      */
+      function splitChars(el) {
+        if (!el) return;
+        const txt = el.textContent.trim();
+        // Avoid re-splitting
+        if (el.dataset.splitted) return;
+        el.innerHTML = '';
+        for (let i = 0; i < txt.length; i++) {
+          const ch = txt[i] === ' ' ? '\u00A0' : txt[i];
+          const span = document.createElement('span');
+          span.className = 'char';
+          span.textContent = ch;
+          el.appendChild(span);
+        }
+        el.dataset.splitted = '1';
+      }
+
+      function heroAnimate() {
+        const h = document.getElementById('heroTitle');
+        if (!h) return;
+        splitChars(h);
+        const chars = h.querySelectorAll('.char');
+        // Desktop only; otherwise leave static
+        if (!enableAnimations || chars.length === 0) {
+          // ensure it's visible and not hidden
+          chars.forEach(c => { c.style.opacity = 1; c.style.transform = 'none'; });
+          return;
+        }
+
+        gsap.fromTo(chars, {
+          y: 30, opacity: 0
+        }, {
+          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.03,
+          scrollTrigger: {
+            trigger: h,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+            once: true
+          }
+        });
+      }
+
+      /* ------------
+         2) Subtitle typewriter (simple) - runs once on desktop
+      */
+      function heroTypewriter() {
+        const el = document.getElementById('heroSubtitle');
+        if (!el) return;
+        const text = el.dataset.typetext || el.textContent.trim();
+        if (!enableAnimations) {
+          el.textContent = text;
+          return;
+        }
+        // Only run once when near top
+        const shown = { done: false };
+        const observer = new IntersectionObserver((ents) => {
+          const e = ents[0];
+          if (e.isIntersecting && !shown.done) {
+            shown.done = true;
+            // type
+            el.textContent = '';
+            let i = 0;
+            const speed = 25;
+            const step = () => {
+              if (i <= text.length) {
+                el.textContent = text.slice(0, i);
+                i++;
+                requestAnimationFrame(() => setTimeout(step, speed));
+              }
+            };
+            step();
+            observer.disconnect();
+          }
+        }, { threshold: 0.6 });
+        observer.observe(el);
+      }
+
+      /* ------------
+         3) Plan titles and blur reveal
+      */
+      function planReveal() {
+        const titles = document.querySelectorAll('.plan-title');
+        if (!enableAnimations || titles.length === 0) {
+          titles.forEach(t => t.style.filter = 'none');
+          return;
+        }
+        titles.forEach(t => {
+          // initial blur
+          t.style.filter = 'blur(8px)';
+          gsap.to(t, {
+            filter: 'blur(0px)',
+            opacity: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: t,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+              once: true
+            }
+          });
+        });
+      }
+
+      /* ------------
+         4) CountUp numbers for price tags
+      */
+      function initCountUps() {
+        document.querySelectorAll('.count-up').forEach(el => {
+          const to = parseFloat(el.dataset.to || el.textContent.trim()) || 0;
+          // ensure integer or decimal precision preserved
+          let decimals = 0;
+          if (String(to).indexOf('.') >= 0) decimals = String(to).split('.')[1].length;
+
+          if (!enableAnimations) {
+            el.textContent = to.toFixed(decimals);
+            return;
+          }
+          // count on enter view
+          const observer = new IntersectionObserver((ents, obs) => {
+            if (ents[0].isIntersecting) {
+              const start = performance.now();
+              const duration = 900; // ms
+              const from = 0;
+              const animate = (now) => {
+                const t = Math.min(1, (now - start) / duration);
+                // ease out cubic
+                const eased = 1 - Math.pow(1 - t, 3);
+                const val = from + (to - from) * eased;
+                el.textContent = (+val).toFixed(decimals);
+                if (t < 1) requestAnimationFrame(animate);
+                else obs.unobserve(el);
+              };
+              requestAnimationFrame(animate);
+            }
+          }, { threshold: 0.6 });
+          observer.observe(el);
+        });
+      }
+
+      /* ------------
+         5) Team decrypt hover (desktop)
+         decrypt-scramble on hover, reveal real text
+      */
+      function setupDecrypts() {
+        const seeds = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{};:\'",.<>/?|`~';
+        const elements = document.querySelectorAll('.decrypt');
+        elements.forEach(el => {
+          const real = el.dataset.text || el.textContent.trim();
+          // create span letters
+          el.innerHTML = '';
+          const letters = [];
+          for (let i = 0; i < real.length; i++) {
+            const ch = real[i] === ' ' ? '\u00A0' : real[i];
+            const span = document.createElement('span');
+            span.className = 'decrypt-letter decrypt-encrypted';
+            span.textContent = isNaN(ch) && ch.trim() === '' ? '\u00A0' : ch;
+            // set data-real
+            span.dataset.real = ch;
+            el.appendChild(span);
+            letters.push(span);
+          }
+
+          if (!enableAnimations) {
+            // reveal immediately on mobile/reduced-motion
+            letters.forEach(s => {
+              s.classList.remove('decrypt-encrypted');
+              s.classList.add('decrypt-revealed');
+              s.textContent = s.dataset.real;
+            });
+            return;
+          }
+
+          let interval = null;
+          el.addEventListener('mouseenter', () => {
+            let iter = 0;
+            const maxIter = 14;
+            if (interval) clearInterval(interval);
+            interval = setInterval(() => {
+              let done = true;
+              for (let i = 0; i < letters.length; i++) {
+                const span = letters[i];
+                const realCh = span.dataset.real;
+                if (realCh === '\u00A0') { span.textContent = '\u00A0'; continue; }
+
+                if (iter > i/1.2) {
+                  span.textContent = realCh;
+                  span.classList.remove('decrypt-encrypted');
+                  span.classList.add('decrypt-revealed');
+                } else {
+                  done = false;
+                  span.textContent = seeds.charAt(Math.floor(Math.random() * seeds.length));
+                }
+              }
+              iter++;
+              if (done || iter > maxIter) {
+                clearInterval(interval);
+                interval = null;
+              }
+            }, 45);
+          });
+          el.addEventListener('mouseleave', () => {
+            // on leave: revert to plaintext (not scrambled), but keep revealed style
+            if (interval) { clearInterval(interval); interval = null; }
+            letters.forEach(s => {
+              s.textContent = s.dataset.real;
+              s.classList.remove('decrypt-encrypted');
+              s.classList.add('decrypt-revealed');
+            });
+          });
+        });
+      }
+
+      /* ------------
+         6) Small staggered reveal for section titles (scroll float / reveal)
+      */
+      function sectionTitleReveal() {
+        const titles = document.querySelectorAll('.section-title');
+        titles.forEach(h => {
+          if (!enableAnimations) { h.style.opacity = 1; return; }
+          splitChars(h);
+          const chars = h.querySelectorAll('.char');
+          gsap.fromTo(chars, { y: 20, opacity: 0 }, {
+            y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', stagger: 0.02,
+            scrollTrigger: { trigger: h, start: 'top 90%', toggleActions: 'play none none none', once: true }
+          });
+        });
+      }
+
+      /* Run initializers on DOM ready */
+      document.addEventListener('DOMContentLoaded', () => {
+        heroAnimate();
+        heroTypewriter();
+        planReveal();
+        initCountUps();
+        setupDecrypts();
+        sectionTitleReveal();
+      });
+
+    })();
+  </script>
+
 </body>
 </html>
