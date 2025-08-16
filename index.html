@@ -178,7 +178,7 @@
     <header class="sticky top-4 z-50 mb-8">
       <div class="bg-[var(--surface)]/[0.8] backdrop-blur-md rounded-2xl shadow-lg p-3 sm:p-4 flex justify-between items-center transition-colors duration-500">
         <div class="flex items-center space-x-3 sm:space-x-4">
-          <img src="tibebmayalogo.png" alt="Tibebmaya logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-lg">
+          <img src="tibebmayalogo.png" alt="Tibebmaya logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/48x48/EBF4FF/768498?text=T';">
           <div>
             <div class="font-extrabold text-xl sm:text-2xl tracking-tight">Tibebmaya</div>
             <div class="text-sm text-[var(--muted)] hidden sm:block">Personalized tutoring • KG–12</div>
@@ -234,7 +234,7 @@
             </dl>
           </div>
           <div class="hidden lg:block relative h-[480px] rounded-[3rem] overflow-hidden shadow-2xl">
-            <img src="students-group.jpg" alt="A group of students learning" class="absolute inset-0 w-full h-full object-cover">
+            <img src="students-group.jpg" alt="A group of students learning" class="absolute inset-0 w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x480/EBF4FF/768498?text=Students';">
             <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
           </div>
         </div>
@@ -377,32 +377,44 @@
           <h2 class="text-3xl font-bold tracking-tight text-[var(--accent-2)] section-title">Contact & Team</h2>
           <p class="mt-2 text-[var(--muted)]">Meet our dedicated team of educators.</p>
         </div>
-        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="card p-6 text-center sm:text-left flex flex-col sm:flex-row items-center sm:items-start gap-4">
-            <img class="w-20 h-20 rounded-full object-cover" src="gelgelo-headshot.png" alt="Gelgelo Askale">
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Team Member Card -->
+          <div class="card p-6 flex flex-col items-center text-center">
+            <img class="w-24 h-24 rounded-full object-cover mb-4" src="gelgelo-headshot.png" alt="Gelgelo Askale" onerror="this.onerror=null;this.src='https://placehold.co/96x96/EBF4FF/768498?text=G';">
             <div>
               <h3 class="text-lg font-bold team-name"><span class="decrypt" data-text="Gelgelo Askale">Gelgelo Askale</span></h3>
-              <div class="text-sm text-[var(--muted)]">Tutor • Early years specialist</div>
-              <div class="mt-2 text-[var(--text)]">gelgelo@example.com</div>
-              <div class="text-sm text-[var(--muted)]">+251 911 123 456</div>
+              <p class="text-sm text-[var(--muted)]">Tutor • Early years specialist</p>
+              <p class="mt-2 text-sm text-[var(--text)]">gelgelo@example.com</p>
+              <p class="text-sm text-[var(--muted)]">+251 911 123 456</p>
             </div>
           </div>
-          <div class="card p-6 text-center sm:text-left flex flex-col sm:flex-row items-center sm:items-start gap-4">
-            <img class="w-20 h-20 rounded-full object-cover" src="beamlak-headshot.png" alt="Beamlak Chernet">
+          <!-- Team Member Card -->
+          <div class="card p-6 flex flex-col items-center text-center">
+            <img class="w-24 h-24 rounded-full object-cover mb-4" src="metadel.png" alt="Metadel" onerror="this.onerror=null;this.src='https://placehold.co/96x96/EBF4FF/768498?text=M';">
             <div>
-              <h3 class="text-lg font-bold team-name"><span class="decrypt" data-text="Beamlak Chernet">Beamlak Chernet</span></h3>
-              <div class="text-sm text-[var(--muted)]">Tutor • Math & Science</div>
-              <div class="mt-2 text-[var(--text)]">beamlak@example.com</div>
-              <div class="text-sm text-[var(--muted)]">+251 922 234 567</div>
+              <h3 class="text-lg font-bold team-name"><span class="decrypt" data-text="Metadel">Metadel</span></h3>
+              <p class="text-sm text-[var(--muted)]">Marketing Graduate</p>
+              <p class="mt-2 text-sm text-[var(--muted)]">+251 903 446 865</p>
             </div>
           </div>
-          <div class="card p-6 text-center sm:text-left flex flex-col sm:flex-row items-center sm:items-start gap-4">
-            <img class="w-20 h-20 rounded-full object-cover" src="fikadu-headshot.png" alt="Fikadu Asebe">
+          <!-- Team Member Card -->
+          <div class="card p-6 flex flex-col items-center text-center">
+            <img class="w-24 h-24 rounded-full object-cover mb-4" src="fikadu-headshot.png" alt="Fikadu Asebe" onerror="this.onerror=null;this.src='https://placehold.co/96x96/EBF4FF/768498?text=F';">
             <div>
               <h3 class="text-lg font-bold team-name"><span class="decrypt" data-text="Fikadu Asebe">Fikadu Asebe</span></h3>
-              <div class="text-sm text-[var(--muted)]">Tutor • English & Test Prep</div>
-              <div class="mt-2 text-[var(--text)]">fikadu@example.com</div>
-              <div class="text-sm text-[var(--muted)]">+251 933 345 678</div>
+              <p class="text-sm text-[var(--muted)]">Tutor • English & Test Prep</p>
+              <p class="mt-2 text-sm text-[var(--text)]">fikadu@example.com</p>
+              <p class="text-sm text-[var(--muted)]">+251 933 345 678</p>
+            </div>
+          </div>
+          <!-- Team Member Card -->
+          <div class="card p-6 flex flex-col items-center text-center">
+            <img class="w-24 h-24 rounded-full object-cover mb-4" src="beamlak-headshot.png" alt="Beamlak Chernet" onerror="this.onerror=null;this.src='https://placehold.co/96x96/EBF4FF/768498?text=B';">
+            <div>
+              <h3 class="text-lg font-bold team-name"><span class="decrypt" data-text="Beamlak Chernet">Beamlak Chernet</span></h3>
+              <p class="text-sm text-[var(--muted)]">Tutor • Math & Science</p>
+              <p class="mt-2 text-sm text-[var(--text)]">beamlak@example.com</p>
+              <p class="text-sm text-[var(--muted)]">+251 922 234 567</p>
             </div>
           </div>
         </div>
